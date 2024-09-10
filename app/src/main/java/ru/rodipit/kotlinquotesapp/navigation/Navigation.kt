@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.image.api.ImageScreenWrapper
 import ru.rodipit.favourites.api.FavouritesScreenWrapper
 import ru.rodipit.kotlinquotesapp.R
 import ru.rodipit.kotlinquotesapp.navigation.models.Routes
@@ -49,6 +50,11 @@ fun NavHostContainer(
             composable(Routes.Favourites.route) {
                 FavouritesScreenWrapper()
             }
+
+            composable(Routes.Image.route) {
+                ImageScreenWrapper()
+            }
+
         }
     )
 
@@ -69,6 +75,11 @@ fun BottomNavigationBar(navController: NavHostController) {
                 label = "Favourites",
                 icon = R.drawable.baseline_favorite_24,
                 route = Routes.Favourites.route,
+            ),
+            BottomNavItem(
+                label = "Image",
+                icon = R.drawable.baseline_image_24,
+                route = Routes.Image.route,
             )
         )
     }

@@ -1,6 +1,7 @@
 package ru.rodipit.kotlinquotesapp.app
 
 import android.app.Application
+import com.example.image.di.imageScreenModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import ru.rodipit.database.di.databaseModule
@@ -19,6 +20,7 @@ class QuotesApp: Application() {
                 favouritesScreenModule,
                 quotesRepositoryModule,
                 databaseModule,
+                imageScreenModule,
             )
         }
     }

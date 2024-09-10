@@ -49,7 +49,6 @@ dependencies {
     implementation(libs.material)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.koin.core)
-    implementation(libs.koin.core)
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.androidx.compose)
     testImplementation(libs.junit)
