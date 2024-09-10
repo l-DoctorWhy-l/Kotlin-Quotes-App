@@ -6,4 +6,6 @@ interface QuotesRepository {
 
     suspend fun loadQuotes(): List<QuoteModel>
 
+    suspend fun loadImageUrl(): String
+
 }

@@ -13,4 +13,8 @@ internal class QuotesRepositoryImpl(
     override suspend fun loadQuotes(): List<QuoteModel> = withContext(Dispatchers.IO) {
         return@withContext api.loadQuotes().mapNotNull { it.toQuote() }
     }
+
+    override suspend fun loadImageUrl(): String = withContext(Dispatchers.IO) {
+        return@withContext api.loadImageSrc()
+    }
 }
