@@ -1,4 +1,4 @@
-package ru.rodipit.main_screen.ui
+﻿package ru.rodipit.main_screen.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,10 +9,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,24 +41,35 @@ internal fun MainScreenContent(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MainScreenSuccess(
     uiData: UiState.Success,
     presenter: MainScreenPresenter,
     modifier: Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(8.dp),
+    val isRefreshing by presenter.refreshingState.collectAsState()
+    val pullRefreshState = rememberPullToRefreshState()
+
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = presenter::refresh,
+        state = pullRefreshState,
     ) {
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(8.dp),
         ) {
-            items(uiData.quotes) {
-                QuoteItem(
-                    uiData = it
-                )
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                itemsIndexed(uiData.quotes) { index, item ->
+                    QuoteItem(
+                        uiData = item,
+                        onLongClick = { presenter.likeQuote(index) }
+                    )
+                }
             }
         }
     }

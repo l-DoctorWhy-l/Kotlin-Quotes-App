@@ -26,10 +26,6 @@ internal class FavouritesScreenViewModel: ViewModel() {
                 _state.value = UiState.Success(quotes = quotes.map { it.toQuoteItemUiData() })
             }
         }
-
-        viewModelScope.launch {
-            databaseManager.insertQuote(quoteModel = QuoteModel("AVCDEFG", "12345"))
-        }
     }
 
 }

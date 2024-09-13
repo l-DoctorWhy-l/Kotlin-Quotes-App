@@ -23,19 +23,5 @@ internal class ImageScreenViewModel : ViewModel() {
         get() =
             _state.asStateFlow()
 
-    init {
-        loadQuotes()
-    }
-
-
-    private fun loadQuotes() {
-        loadingJob?.cancel()
-        loadingJob = null
-
-        loadingJob = viewModelScope.launch {
-            val result = quotesRepo.loadImageUrl()
-            _state.value = result
-        }
-    }
 
 }

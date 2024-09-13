@@ -1,7 +1,8 @@
 package ru.rodipit.design.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,11 +21,13 @@ import androidx.compose.ui.unit.dp
 import ru.rodipit.design.components.model.QuoteItemUiData
 import ru.rodipit.design.theme.AppTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun QuoteItem(
     uiData: QuoteItemUiData,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
+    onLongClick: (() -> Unit)? = null,
 ) {
 
     Column(
@@ -32,8 +35,11 @@ fun QuoteItem(
             .clip(RoundedCornerShape(12.dp))
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.tertiaryContainer)
-            .then(onClick?.let { Modifier.clickable { onClick.invoke() } } ?: Modifier)
-            .padding(8.dp)
+            .combinedClickable(
+                onClick = { onClick?.invoke() },
+                onLongClick = { onLongClick?.invoke() }
+            )
+            .padding(8.dp),
     ) {
         Text(
             overflow = TextOverflow.Ellipsis,

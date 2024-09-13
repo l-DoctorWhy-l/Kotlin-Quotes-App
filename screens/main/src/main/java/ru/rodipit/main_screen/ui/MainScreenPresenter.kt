@@ -9,12 +9,26 @@ import ru.rodipit.main_screen.viewmodel.MainScreenViewModel
 internal interface MainScreenPresenter {
 
     val state: StateFlow<UiState>
+    val refreshingState: StateFlow<Boolean>
+
+    fun likeQuote(pos: Int)
+
+    fun refresh()
 
     class Impl(
-        viewModel: MainScreenViewModel,
+        private val viewModel: MainScreenViewModel,
     ): MainScreenPresenter {
 
         override val state = viewModel.state
+        override val refreshingState = viewModel.isRefreshingState
+
+        override fun likeQuote(pos: Int) {
+            viewModel.likeQuote(pos)
+        }
+
+        override fun refresh() {
+            viewModel.loadQuotes()
+        }
 
     }
 
@@ -22,6 +36,10 @@ internal interface MainScreenPresenter {
         private val uiState: UiState = UiState.Loading,
     ): MainScreenPresenter {
         override val state = MutableStateFlow(uiState)
+        override val refreshingState = MutableStateFlow(false)
+
+        override fun likeQuote(pos: Int) = Unit
+        override fun refresh() = Unit
 
     }
 
