@@ -73,7 +73,7 @@ fun BottomNavigationBar(navController: NavHostController) {
             ),
             BottomNavItem(
                 label = "Favourites",
-                icon = R.drawable.baseline_favorite_24,
+                icon = ru.rodipit.design.R.drawable.baseline_favorite_24,
                 route = Routes.Favourites.route,
             ),
             BottomNavItem(

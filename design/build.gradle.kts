@@ -40,6 +40,9 @@ android {
 
 dependencies {
 
+    implementation(project(":database"))
+    implementation(project(":models"))
+
     api(libs.androidx.ui)
     api(libs.androidx.ui.graphics)
     api(libs.androidx.ui.tooling.preview)
@@ -48,6 +51,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.koin.core)
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     testImplementation(libs.junit)

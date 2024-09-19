@@ -6,6 +6,7 @@ import androidx.compose.runtime.Stable
 data class QuoteItemUiData(
     val content: String,
     val author: String?,
+    val isLiked: Boolean = false,
 ) {
     companion object {
         fun forPreview(): QuoteItemUiData {

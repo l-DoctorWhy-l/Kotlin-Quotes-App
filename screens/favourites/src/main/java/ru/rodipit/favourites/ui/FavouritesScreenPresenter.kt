@@ -10,11 +10,17 @@ internal interface FavouritesScreenPresenter {
 
     val state: StateFlow<UiState>
 
+    fun unlikeQuote(pos: Int)
+
+
     class Impl(
-        viewModel: FavouritesScreenViewModel,
+        private val viewModel: FavouritesScreenViewModel,
     ): FavouritesScreenPresenter {
 
         override val state = viewModel.state
+        override fun unlikeQuote(pos: Int) {
+            viewModel.unlikeQuote(pos)
+        }
 
     }
 
@@ -22,6 +28,7 @@ internal interface FavouritesScreenPresenter {
         private val uiState: UiState = UiState.Loading,
     ): FavouritesScreenPresenter {
         override val state = MutableStateFlow(uiState)
+        override fun unlikeQuote(pos: Int) = Unit
 
     }
 

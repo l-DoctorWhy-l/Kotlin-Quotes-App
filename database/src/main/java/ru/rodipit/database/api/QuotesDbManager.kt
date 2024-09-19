@@ -6,10 +6,14 @@ import ru.rodipit.models.QuoteModel
 interface QuotesDbManager {
 
 
-    suspend fun getAll(): Flow<List<QuoteModel>>
+    fun getAll(): Flow<List<QuoteModel>>
 
     suspend fun insertQuote(quoteModel: QuoteModel)
 
+    suspend fun deleteQuote(quoteModel: QuoteModel)
+
     suspend fun deleteAll()
+
+    suspend fun isLikedState(quoteModel: QuoteModel): Boolean
 
 }

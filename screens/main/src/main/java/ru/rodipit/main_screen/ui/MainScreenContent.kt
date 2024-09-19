@@ -67,7 +67,7 @@ private fun MainScreenSuccess(
                 itemsIndexed(uiData.quotes) { index, item ->
                     QuoteItem(
                         uiData = item,
-                        onLongClick = { presenter.likeQuote(index) }
+                        onClick = { presenter.likeQuote(index) }
                     )
                 }
             }
