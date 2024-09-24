@@ -2,6 +2,8 @@ package ru.rodipit.favourites.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,7 +13,9 @@ import org.koin.java.KoinJavaComponent.inject
 import ru.rodipit.database.api.QuotesDbManager
 import ru.rodipit.design.components.model.QuoteItemUiData
 import ru.rodipit.favourites.ui.UiState
+import ru.rodipit.favourites.workmanager.MyWorker
 import ru.rodipit.models.QuoteModel
+import java.util.concurrent.TimeUnit
 
 internal class FavouritesScreenViewModel : ViewModel() {
 
@@ -49,6 +53,14 @@ internal class FavouritesScreenViewModel : ViewModel() {
         }
     }
 
+    fun doWork(workManager: WorkManager) {
+        val workRequest = OneTimeWorkRequestBuilder<MyWorker>()
+            .addTag("work")
+            .setInitialDelay(10, TimeUnit.SECONDS)
+            .build()
+
+        workManager.enqueue(workRequest)
+    }
 }
 
 private fun QuoteModel.toQuoteItemUiData(isLiked: Boolean): QuoteItemUiData {
