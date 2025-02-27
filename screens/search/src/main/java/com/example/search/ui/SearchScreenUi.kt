@@ -85,7 +85,7 @@ private fun SearchScreenContent(
             trailingIcon = {
                 Icon(
                     painter = painterResource(R.drawable.baseline_clear_24),
-                    tint = MaterialTheme.colorScheme.onPrimary,
+                    tint = MaterialTheme.colorScheme.primary,
                     contentDescription = null,
                 )
             },
