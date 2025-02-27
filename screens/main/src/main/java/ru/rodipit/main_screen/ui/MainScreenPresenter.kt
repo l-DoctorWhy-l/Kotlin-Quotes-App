@@ -33,7 +33,7 @@ internal interface MainScreenPresenter {
     }
 
     class Preview(
-        private val uiState: UiState = UiState.Loading,
+        private val uiState: UiState = UiState.Loading(true),
     ): MainScreenPresenter {
         override val state = MutableStateFlow(uiState)
         override val refreshingState = MutableStateFlow(false)
@@ -49,7 +49,7 @@ internal interface MainScreenPresenter {
 @Immutable
 internal sealed interface UiState {
 
-    data object Loading: UiState
+    data class Loading(val isLoading: Boolean): UiState
 
     data class Success(val quotes: List<QuoteItemUiData>): UiState {
         companion object {

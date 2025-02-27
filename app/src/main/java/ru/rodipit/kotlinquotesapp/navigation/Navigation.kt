@@ -3,7 +3,6 @@ package ru.rodipit.kotlinquotesapp.navigation
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -23,11 +22,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.image.api.ImageScreenWrapper
+import com.example.search.api.SearchScreenWrapper
 import ru.rodipit.favourites.api.FavouritesScreenWrapper
 import ru.rodipit.kotlinquotesapp.R
-import ru.rodipit.kotlinquotesapp.navigation.models.Routes
-import ru.rodipit.design.theme.AppTheme
+import com.example.navigation.api.Route
 import ru.rodipit.main_screen.api.MainScreenWrapper
 
 @Composable
@@ -35,24 +33,23 @@ fun NavHostContainer(
     navController: NavHostController,
     padding: PaddingValues
 ) {
-
     NavHost(
         navController = navController,
-        startDestination = Routes.Home.route,
+        startDestination = Route.Home.value,
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues = padding),
         builder = {
-            composable(Routes.Home.route) {
+            composable(Route.Home.value) {
                 MainScreenWrapper()
             }
 
-            composable(Routes.Favourites.route) {
+            composable(Route.Favourites.value) {
                 FavouritesScreenWrapper()
             }
 
-            composable(Routes.Image.route) {
-                ImageScreenWrapper()
+            composable(Route.Search.value) {
+                SearchScreenWrapper()
             }
 
         }
@@ -62,25 +59,27 @@ fun NavHostContainer(
 
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(
+    navController: NavHostController,
+) {
 
     val bottomNavItems = remember {
         listOf(
             BottomNavItem(
+                label = "Search",
+                icon = R.drawable.baseline_search_24,
+                route = Route.Search,
+            ),
+            BottomNavItem(
                 label = "Home",
                 icon = R.drawable.baseline_home_24,
-                route = Routes.Home.route,
+                route = Route.Home,
             ),
             BottomNavItem(
                 label = "Favourites",
                 icon = ru.rodipit.design.R.drawable.baseline_favorite_24,
-                route = Routes.Favourites.route,
+                route = Route.Favourites,
             ),
-            BottomNavItem(
-                label = "Image",
-                icon = R.drawable.baseline_image_24,
-                route = Routes.Image.route,
-            )
         )
     }
 
@@ -94,7 +93,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         bottomNavItems.forEach { navItem ->
 
             NavigationBarItem(
-                selected = currentRoute == navItem.route,
+                selected = currentRoute == navItem.route.value,
                 colors = NavigationBarItemColors(
                     selectedIconColor = MaterialTheme.colorScheme.onPrimary,
                     selectedTextColor = Color.Transparent,
@@ -105,7 +104,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                     disabledTextColor = Color.Transparent,
                 ),
                 onClick = {
-                    navController.navigate(navItem.route) {
+                    navController.navigate(navItem.route.value) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
@@ -129,5 +128,5 @@ fun BottomNavigationBar(navController: NavHostController) {
 internal data class BottomNavItem(
     val label: String,
     @DrawableRes val icon: Int,
-    val route: String,
+    val route: Route,
 )

@@ -1,6 +1,5 @@
 package ru.rodipit.main_screen.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
@@ -18,7 +17,7 @@ import ru.rodipit.quotes_api.api.QuotesRepository
 
 internal class MainScreenViewModel: ViewModel() {
 
-    private val _state: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
+    private val _state: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading(true))
 
     private val _isRefreshingState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
@@ -84,7 +83,7 @@ internal class MainScreenViewModel: ViewModel() {
 private fun QuoteModel.toQuoteItemUiData(isLiked: Boolean = false): QuoteItemUiData {
     return QuoteItemUiData(
         content = content,
-        author = author,
+        film = author,
         isLiked = isLiked,
     )
 }

@@ -5,8 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import org.koin.androidx.compose.koinViewModel
-import ru.rodipit.design.components.TopAppBar
-import ru.rodipit.main_screen.ui.MainScreenContent
+import ru.rodipit.main_screen.ui.MainScreenUi
 import ru.rodipit.main_screen.ui.MainScreenPresenter
 import ru.rodipit.main_screen.viewmodel.MainScreenViewModel
 
@@ -20,8 +19,7 @@ fun MainScreenWrapper(
     Column(
         modifier = modifier,
     ) {
-        TopAppBar(title = "Home")
-        MainScreenContent(
+        MainScreenUi(
             presenter = presenter,
         )
     }

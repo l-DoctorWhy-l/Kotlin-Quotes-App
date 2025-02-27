@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -56,8 +57,16 @@ dependencies {
     implementation(project(":design"))
     implementation(project(":quotes-api"))
     implementation(project(":database"))
+    implementation(project(":screens:search"))
+    implementation(project(":screens:splash"))
+    implementation(project(":screens:sign_up"))
+    implementation(project(":screens:sign_in"))
+    implementation(project(":screens:profile"))
+    implementation(project(":screens:add-quote"))
+    implementation(project(":screens:quote-details"))
+    implementation(project(":navigation"))
 
-
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -67,7 +76,6 @@ dependencies {
     implementation(libs.koin.bom)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
-    implementation(project(":screens:image"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
