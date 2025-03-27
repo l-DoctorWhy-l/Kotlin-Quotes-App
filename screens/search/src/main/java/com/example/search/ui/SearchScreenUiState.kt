@@ -6,16 +6,18 @@ import ru.rodipit.design.components.model.QuoteItemUiData
 @Stable
 internal interface SearchScreenUiState {
 
-    val query: String
+    data object Loading: SearchScreenUiState
 
-    data class Loading(
-        override val query: String,
-        val isLoading: Boolean,
+    data class Error(
+        val message: String? = null,
     ): SearchScreenUiState
 
     data class Content(
-        override val query: String,
         val searchResult: List<QuoteItemUiData>,
+    ): SearchScreenUiState
+
+    data class History(
+        val items: List<QuoteItemUiData>,
     ): SearchScreenUiState
 
 }

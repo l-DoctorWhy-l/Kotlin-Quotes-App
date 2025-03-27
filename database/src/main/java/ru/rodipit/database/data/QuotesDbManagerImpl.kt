@@ -20,9 +20,9 @@ internal class QuotesDbManagerImpl(
     override suspend fun insertQuote(quoteModel: QuoteModel) = withContext(Dispatchers.IO) {
         roomDatabase.quotesDao().insertQuote(
             quoteEntity = QuoteEntity(
-                id = null,
+                id = "",
                 content = quoteModel.content,
-                author = quoteModel.author,
+                author = quoteModel.film,
             )
         )
     }
@@ -30,7 +30,7 @@ internal class QuotesDbManagerImpl(
     override suspend fun deleteQuote(quoteModel: QuoteModel) = withContext(Dispatchers.IO) {
         roomDatabase.quotesDao().deleteQuote(
             content = quoteModel.content,
-            author = quoteModel.author,
+            author = quoteModel.film,
         )
     }
 
@@ -41,7 +41,7 @@ internal class QuotesDbManagerImpl(
     override suspend fun isLikedState(quoteModel: QuoteModel) = withContext(Dispatchers.IO) {
         return@withContext roomDatabase.quotesDao().isLikedState(
             content = quoteModel.content,
-            author = quoteModel.author,
+            author = quoteModel.film,
         ) != 0
     }
 }

@@ -8,11 +8,17 @@ internal interface QuoteDetailsScreenPresenter {
 
     val state: StateFlow<QuoteDetailsScreenUiState>
 
+    fun onBackButtonClick()
+
     class Impl(
-        viewModel: QuoteDetailsScreenViewModel,
+        private val viewModel: QuoteDetailsScreenViewModel,
     ): QuoteDetailsScreenPresenter {
 
         override val state = viewModel.uiState
+
+        override fun onBackButtonClick() {
+            viewModel.onBackButtonClicked()
+        }
 
     }
 
@@ -20,7 +26,8 @@ internal interface QuoteDetailsScreenPresenter {
         uiState: QuoteDetailsScreenUiState,
     ): QuoteDetailsScreenPresenter {
         override val state = MutableStateFlow(uiState)
-    }
+        override fun onBackButtonClick() = Unit
 
+    }
 
 }

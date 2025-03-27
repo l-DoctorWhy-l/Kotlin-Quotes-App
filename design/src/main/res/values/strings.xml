@@ -14,10 +14,21 @@
     <string name="go_to_sign_in_text">Sign In</string>
     <string name="splash_screen_title_text">MovieQuotes</string>
     <string name="profile_screen_top_bar_title">Profile</string>
+    <string name="settings_screen_top_bar_title">Settings</string>
     <string name="add_quote_screen_top_bar_title">Add quote</string>
     <string name="name">Name: %s</string>
     <string name="email">Email: %s</string>
     <string name="enter_movie_title">Enter a movie title</string>
     <string name="enter_movie_quote">Enter a quote</string>
     <string name="add_quote_button_text">Add quote</string>
+    <string name="search_result_text_error">Oops, an error has occurred.</string>
+    <string name="search_result_empty_text">Nothing was found.</string>
+    <string name="search_result_empty_description">Try to write something else</string>
+    <string name="search_history_header">Search History</string>
+    <string name="empty_search_history_text">Your search history is empty</string>
+    <string name="empty_search_history_description">Try to search something</string>
+    <string name="clear_search_history_button_text">Clear</string>
+    <string name="light_theme_type_text">Light</string>
+    <string name="dark_theme_type_text">Dark</string>
+    <string name="auto_theme_type_text">Auto</string>
 </resources>

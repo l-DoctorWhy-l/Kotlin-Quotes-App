@@ -6,6 +6,8 @@ import ru.rodipit.profile.ProfileScreenViewModel
 
 val profileScreenModule = module {
     viewModel {
-        ProfileScreenViewModel()
+        ProfileScreenViewModel(
+            navigator = get()
+        )
     }
 }

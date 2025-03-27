@@ -27,7 +27,7 @@ internal interface MainScreenPresenter {
         }
 
         override fun refresh() {
-            viewModel.loadQuotes()
+
         }
 
     }

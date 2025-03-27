@@ -43,10 +43,13 @@ dependencies {
     implementation(project(":quotes-api"))
     implementation(project(":models"))
     implementation(project(":design"))
+    implementation(project(":utils"))
+    implementation(project(":navigation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.gson)
     implementation(libs.coil.compose)
     implementation(libs.koin.core)
     implementation(libs.koin.android)

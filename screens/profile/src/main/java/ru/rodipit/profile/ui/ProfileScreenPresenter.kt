@@ -8,11 +8,23 @@ internal interface ProfileScreenPresenter {
 
     val state: StateFlow<ProfileScreenUiState>
 
+    fun onNavigateToSettings()
+
+    fun onBackButtonClick()
+
     class Impl(
-        viewModel: ProfileScreenViewModel,
+        private val viewModel: ProfileScreenViewModel,
     ): ProfileScreenPresenter {
 
         override val state = viewModel.uiState
+
+        override fun onNavigateToSettings() {
+            viewModel.onNavigateToSettingsScreen()
+        }
+
+        override fun onBackButtonClick() {
+            viewModel.onBackButtonClick()
+        }
 
     }
 
@@ -20,6 +32,8 @@ internal interface ProfileScreenPresenter {
         uiState: ProfileScreenUiState,
     ): ProfileScreenPresenter {
         override val state = MutableStateFlow(uiState)
+        override fun onNavigateToSettings()  = Unit
+        override fun onBackButtonClick() = Unit
     }
 
 

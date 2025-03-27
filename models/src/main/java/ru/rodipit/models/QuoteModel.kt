@@ -1,6 +1,7 @@
 package ru.rodipit.models
 
 data class QuoteModel(
+    val id: String,
     val content: String,
-    val author: String?,
+    val film: String?,
 )

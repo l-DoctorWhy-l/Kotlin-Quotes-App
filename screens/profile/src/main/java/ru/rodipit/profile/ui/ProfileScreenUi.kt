@@ -41,8 +41,19 @@ internal fun ProfileScreenUi(
             title = stringResource(R.string.profile_screen_top_bar_title),
             leadingButton = {
                 BackButton(
-                    onBackButtonClicked = { },
+                    onBackButtonClicked = presenter::onBackButtonClick,
                 )
+            },
+            trailingButton = {
+                IconButton(
+                    onClick = presenter::onNavigateToSettings
+                ) {
+                    Icon(
+                        modifier = Modifier.size(32.dp),
+                        painter = painterResource(R.drawable.baseline_settings_24),
+                        contentDescription = null,
+                    )
+                }
             }
         )
         when(val uiState = presenter.state.collectAsState().value) {

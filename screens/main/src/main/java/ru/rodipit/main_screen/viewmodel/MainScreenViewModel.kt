@@ -43,7 +43,6 @@ internal class MainScreenViewModel: ViewModel() {
         _isRefreshingState.asStateFlow()
 
     init {
-        loadQuotes()
 
         viewModelScope.launch {
             likedQuotes.collect { likedQuotes ->
@@ -63,27 +62,28 @@ internal class MainScreenViewModel: ViewModel() {
     }
 
 
-    internal fun loadQuotes() {
-        loadingJob?.cancel()
-        loadingJob = null
-
-        loadingJob = viewModelScope.launch {
-            _isRefreshingState.value = true
-            val result = quotesRepo.loadQuotes()
-            quotes = result
-            _state.value = UiState.Success(quotes = result.map {
-                it.toQuoteItemUiData()
-            })
-            _isRefreshingState.value = false
-        }
-    }
+//    internal fun loadQuotes() {
+//        loadingJob?.cancel()
+//        loadingJob = null
+//
+//        loadingJob = viewModelScope.launch {
+//            _isRefreshingState.value = true
+//            val result = quotesRepo.loadQuotes()
+//            quotes = result
+//            _state.value = UiState.Success(quotes = result.map {
+//                it.toQuoteItemUiData()
+//            })
+//            _isRefreshingState.value = false
+//        }
+//    }
 
 }
 
 private fun QuoteModel.toQuoteItemUiData(isLiked: Boolean = false): QuoteItemUiData {
     return QuoteItemUiData(
+        id = id,
         content = content,
-        film = author,
+        film = film,
         isLiked = isLiked,
     )
 }

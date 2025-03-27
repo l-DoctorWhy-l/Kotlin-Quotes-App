@@ -6,8 +6,5 @@ import ru.rodipit.quote_details.viewmodel.QuoteDetailsScreenViewModel
 
 val quoteDetailsScreenModule = module {
 
-    viewModel {
-        QuoteDetailsScreenViewModel()
-    }
 
 }

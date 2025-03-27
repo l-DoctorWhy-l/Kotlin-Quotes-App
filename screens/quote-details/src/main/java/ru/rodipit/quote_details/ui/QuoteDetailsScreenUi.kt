@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,13 +41,13 @@ internal fun QuoteDetailsScreenUi(
             title = "",
             leadingButton = {
                 BackButton(
-                    onBackButtonClicked = { },
+                    onBackButtonClicked = presenter::onBackButtonClick,
                 )
             }
         )
         when(val uiState = presenter.state.collectAsState().value) {
             is QuoteDetailsScreenUiState.Loading -> {
-
+                QuoteDetailsScreenLoading()
             }
             is QuoteDetailsScreenUiState.Content -> {
                 QuoteDetailsScreenContent(
@@ -66,7 +67,12 @@ private fun QuoteDetailsScreenContent(
     Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp),
+            .padding(
+                top = 32.dp,
+                bottom = 16.dp,
+                start = 16.dp,
+                end = 16.dp,
+            ),
     ) {
         Row(
             Modifier.fillMaxWidth(),
@@ -117,10 +123,28 @@ private fun QuoteDetailsScreenContent(
     }
 }
 
+@Composable
+private fun QuoteDetailsScreenLoading(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.size(60.dp),
+            color = MaterialTheme.colorScheme.primary,
+        )
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
-private fun QuoteDetailsScreenUiPreview() {
+private fun QuoteDetailsScreenContentPreview() {
     AppTheme {
         QuoteDetailsScreenUi(
             modifier = Modifier.fillMaxSize(),
@@ -130,6 +154,19 @@ private fun QuoteDetailsScreenUiPreview() {
                     content = "Im a captain Jack Sparrow\nIm a captain Jack Sparrow\nIm a captain Jack Sparrow\nIm a captain Jack Sparrow\nIm a captain Jack Sparrow\nIm a captain Jack Sparrow\n",
                     isLiked = true,
                 )
+            )
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun QuoteDetailsScreenLoadingPreview() {
+    AppTheme {
+        QuoteDetailsScreenUi(
+            modifier = Modifier.fillMaxSize(),
+            presenter = QuoteDetailsScreenPresenter.Preview(
+                QuoteDetailsScreenUiState.Loading(isLoading = true)
             )
         )
     }

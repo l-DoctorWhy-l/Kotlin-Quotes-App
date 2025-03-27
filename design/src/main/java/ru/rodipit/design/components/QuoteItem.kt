@@ -1,6 +1,7 @@
 package ru.rodipit.design.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ fun QuoteItem(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .fillMaxWidth()
+            .clickable { onClick?.invoke() }
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -211,6 +213,7 @@ private fun ExpandedQuoteItemPreview() {
     AppTheme {
         Column {
             ExpandedQuoteItem(uiData = QuoteItemUiData(
+                id = "1",
                 film = "asdadasdadadadadadadadadadadada",
                 isLiked = true,
                 content = "adasoidaosidjasiojdoadjasjdajdojdaosjdoajjdajdoajoajdoaijdaodiadoaidaodaodajoajaoaijdaoidaoidjaoijdajdaosidoajdoajdoajdoajodasjdoajdadaodjaoidjasodada"

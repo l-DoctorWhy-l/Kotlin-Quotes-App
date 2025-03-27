@@ -52,8 +52,9 @@ internal class FavouritesScreenViewModel : ViewModel() {
 
 private fun QuoteModel.toQuoteItemUiData(isLiked: Boolean): QuoteItemUiData {
     return QuoteItemUiData(
+        id = id,
         content = content,
-        film = author,
+        film = film,
         isLiked = isLiked,
     )
 }

@@ -52,11 +52,10 @@ android {
 
 dependencies {
 
-    implementation(project(":screens:main"))
-    implementation(project(":screens:favourites"))
     implementation(project(":design"))
     implementation(project(":quotes-api"))
     implementation(project(":database"))
+    implementation(project(":screens:main"))
     implementation(project(":screens:search"))
     implementation(project(":screens:splash"))
     implementation(project(":screens:sign_up"))
@@ -64,7 +63,10 @@ dependencies {
     implementation(project(":screens:profile"))
     implementation(project(":screens:add-quote"))
     implementation(project(":screens:quote-details"))
+    implementation(project(":screens:settings"))
+    implementation(project(":screens:favourites"))
     implementation(project(":navigation"))
+    implementation(project(":utils"))
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core.ktx)

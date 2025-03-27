@@ -4,13 +4,15 @@ import com.google.gson.annotations.SerializedName
 import ru.rodipit.models.QuoteModel
 
 data class QuoteDto(
-    @SerializedName("q") val content: String?,
-    @SerializedName("a") val author: String?
+    @SerializedName("id") val id: String,
+    @SerializedName("film") val film: String?,
+    @SerializedName("desc") val content: String?,
 )
 
 internal fun QuoteDto.toQuote(): QuoteModel? {
     return QuoteModel(
+        id = id,
         content = content ?: return null ,
-        author = author,
+        film = film,
     )
 }

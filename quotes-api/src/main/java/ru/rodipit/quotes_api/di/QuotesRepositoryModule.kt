@@ -11,17 +11,16 @@ val quotesRepositoryModule = module {
 
     single<QuotesApi> {
         Retrofit.Builder()
-            .baseUrl("https://zenquotes.io/api/")
+            .baseUrl("http://192.168.3.26:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(QuotesApi::class.java)
     }
 
-    factory<QuotesRepository> {
+    single<QuotesRepository> {
         QuotesRepositoryImpl(
             api = get()
         )
     }
-
 
 }
