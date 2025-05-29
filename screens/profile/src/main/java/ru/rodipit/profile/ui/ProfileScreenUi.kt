@@ -91,14 +91,15 @@ private fun ProfileScreenContent(
                 contentDescription = null,
             )
         }
-        Image(
+        Icon(
             modifier = Modifier
                 .size(120.dp)
                 .clip(CircleShape)
                 .align(Alignment.CenterHorizontally)
                 .padding(vertical = 12.dp),
             painter = painterResource(R.drawable.baseline_person_24),
-            contentDescription = null
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
         )
         Spacer(Modifier.height(8.dp))
         Text(
@@ -122,7 +123,7 @@ private fun ProfileScreenContent(
             onClick = { },
         ) {
             Text(
-                text = "LogOut"
+                text = "Выйти"
             )
         }
     }

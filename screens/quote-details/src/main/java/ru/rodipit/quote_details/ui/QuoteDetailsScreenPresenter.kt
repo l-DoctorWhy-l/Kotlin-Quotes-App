@@ -10,6 +10,8 @@ internal interface QuoteDetailsScreenPresenter {
 
     fun onBackButtonClick()
 
+    fun onLikeClick()
+
     class Impl(
         private val viewModel: QuoteDetailsScreenViewModel,
     ): QuoteDetailsScreenPresenter {
@@ -20,6 +22,10 @@ internal interface QuoteDetailsScreenPresenter {
             viewModel.onBackButtonClicked()
         }
 
+        override fun onLikeClick() {
+            viewModel.onLikeClick()
+        }
+
     }
 
     class Preview(
@@ -27,6 +33,7 @@ internal interface QuoteDetailsScreenPresenter {
     ): QuoteDetailsScreenPresenter {
         override val state = MutableStateFlow(uiState)
         override fun onBackButtonClick() = Unit
+        override fun onLikeClick() = Unit
 
     }
 

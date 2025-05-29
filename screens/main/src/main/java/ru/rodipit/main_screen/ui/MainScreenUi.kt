@@ -28,6 +28,7 @@ import ru.rodipit.design.components.TopAppBar
 import ru.rodipit.design.theme.AppTheme
 import ru.rodipit.main_screen.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MainScreenUi(
     presenter: MainScreenPresenter,
@@ -48,44 +49,53 @@ internal fun MainScreenUi(
                 }
             }
         )
-        when(val uiState = presenter.state.collectAsState().value) {
-            is UiState.Loading -> MainScreenLoading(isLoading = uiState.isLoading, modifier = modifier)
-            is UiState.Success -> MainScreenSuccess(uiData = uiState, presenter = presenter, modifier = modifier)
+
+        val isRefreshing by presenter.refreshingState.collectAsState()
+        val pullRefreshState = rememberPullToRefreshState()
+
+        PullToRefreshBox(
+            isRefreshing = isRefreshing,
+            onRefresh = presenter::refresh,
+            state = pullRefreshState,
+        ) {
+            when (val uiState = presenter.state.collectAsState().value) {
+                is UiState.Loading -> MainScreenLoading(
+                    isLoading = uiState.isLoading,
+                    modifier = modifier
+                )
+
+                is UiState.Success -> MainScreenSuccess(
+                    uiData = uiState,
+                    presenter = presenter,
+                    modifier = modifier
+                )
+            }
         }
     }
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MainScreenSuccess(
     uiData: UiState.Success,
     presenter: MainScreenPresenter,
     modifier: Modifier
 ) {
-    val isRefreshing by presenter.refreshingState.collectAsState()
-    val pullRefreshState = rememberPullToRefreshState()
-
-    PullToRefreshBox(
-        isRefreshing = isRefreshing,
-        onRefresh = presenter::refresh,
-        state = pullRefreshState,
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(8.dp),
     ) {
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(8.dp),
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                itemsIndexed(uiData.quotes) { index, item ->
-                    QuoteItem(
-                        uiData = item,
-                        onClick = { presenter.likeQuote(index) }
-                    )
-                }
+            itemsIndexed(uiData.quotes) { index, item ->
+                QuoteItem(
+                    uiData = item,
+                    onClick = { presenter.onNavigateToQuote(index) },
+                    onLikeClick = { presenter.likeQuote(index) },
+                )
             }
         }
     }
@@ -103,7 +113,6 @@ private fun MainScreenLoading(
             .background(MaterialTheme.colorScheme.background)
             .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        userScrollEnabled = false,
     ) {
         items(3) {
             QuoteItemShimmer(isLoading = isLoading)

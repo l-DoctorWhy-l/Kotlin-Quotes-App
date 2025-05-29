@@ -12,6 +12,8 @@ interface QuotesDbManager {
 
     suspend fun deleteQuote(quoteModel: QuoteModel)
 
+    suspend fun deleteById(quoteId: String)
+
     suspend fun deleteAll()
 
     suspend fun isLikedState(quoteModel: QuoteModel): Boolean

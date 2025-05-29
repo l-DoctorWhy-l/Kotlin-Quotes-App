@@ -14,15 +14,15 @@ internal class QuotesDbManagerImpl(
     private val roomDatabase: LikedQuotesDb
 ) : QuotesDbManager {
     override fun getAll() = roomDatabase.quotesDao().getAll().distinctUntilChanged()
-            .map { quotes -> quotes.map { it.toQuote() } }
+            .map { quotes -> quotes.map { it.toQuote() } }.map { it.reversed() }
 
 
     override suspend fun insertQuote(quoteModel: QuoteModel) = withContext(Dispatchers.IO) {
         roomDatabase.quotesDao().insertQuote(
             quoteEntity = QuoteEntity(
-                id = "",
+                id = quoteModel.id,
                 content = quoteModel.content,
-                author = quoteModel.film,
+                film = quoteModel.film,
             )
         )
     }
@@ -30,8 +30,12 @@ internal class QuotesDbManagerImpl(
     override suspend fun deleteQuote(quoteModel: QuoteModel) = withContext(Dispatchers.IO) {
         roomDatabase.quotesDao().deleteQuote(
             content = quoteModel.content,
-            author = quoteModel.film,
+            film = quoteModel.film,
         )
+    }
+
+    override suspend fun deleteById(quoteId: String) = withContext(Dispatchers.IO) {
+        roomDatabase.quotesDao().deleteById(quoteId)
     }
 
     override suspend fun deleteAll() = withContext(Dispatchers.IO) {
@@ -41,7 +45,7 @@ internal class QuotesDbManagerImpl(
     override suspend fun isLikedState(quoteModel: QuoteModel) = withContext(Dispatchers.IO) {
         return@withContext roomDatabase.quotesDao().isLikedState(
             content = quoteModel.content,
-            author = quoteModel.film,
+            film = quoteModel.film,
         ) != 0
     }
 }

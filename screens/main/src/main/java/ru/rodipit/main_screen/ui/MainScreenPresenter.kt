@@ -13,6 +13,8 @@ internal interface MainScreenPresenter {
 
     fun likeQuote(pos: Int)
 
+    fun onNavigateToQuote(pos: Int)
+
     fun refresh()
 
     class Impl(
@@ -26,8 +28,12 @@ internal interface MainScreenPresenter {
             viewModel.likeQuote(pos)
         }
 
-        override fun refresh() {
+        override fun onNavigateToQuote(pos: Int) {
+            viewModel.onNavigateToQuote(pos)
+        }
 
+        override fun refresh() {
+            viewModel.loadQuotes()
         }
 
     }
@@ -39,6 +45,8 @@ internal interface MainScreenPresenter {
         override val refreshingState = MutableStateFlow(false)
 
         override fun likeQuote(pos: Int) = Unit
+        override fun onNavigateToQuote(pos: Int) = Unit
+
         override fun refresh() = Unit
 
     }

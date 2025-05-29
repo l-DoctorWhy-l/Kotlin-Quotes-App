@@ -1,6 +1,7 @@
 package com.example.sign_up.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,7 +26,11 @@ import ru.rodipit.design.theme.AppTheme
 
 @Composable
 internal fun SignUpScreenUi(
-    onBackToSignIn: () -> Unit,
+    login: String,
+    password: String,
+    error: String,
+    repeatingPassword: String,
+    onEvent: (SignUpScreenEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -42,8 +47,8 @@ internal fun SignUpScreenUi(
         )
         Spacer(Modifier.height(16.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = login,
+            onValueChange = { onEvent(SignUpScreenEvent.LoginChanged(it)) },
             singleLine = true,
             label = {
                 Text(text = stringResource(R.string.login_text_field_label_text))
@@ -58,8 +63,8 @@ internal fun SignUpScreenUi(
         )
         Spacer(Modifier.height(16.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = password,
+            onValueChange = { onEvent(SignUpScreenEvent.PasswordChanged(it)) },
             singleLine = true,
             label = {
                 Text(text = stringResource(R.string.password_text_field_label_text))
@@ -74,8 +79,8 @@ internal fun SignUpScreenUi(
         )
         Spacer(Modifier.height(16.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = repeatingPassword,
+            onValueChange = { onEvent(SignUpScreenEvent.RepeatingPasswordChanged(it)) },
             singleLine = true,
             label = {
                 Text(text = stringResource(R.string.repeat_password_text_field_label_text))
@@ -90,7 +95,7 @@ internal fun SignUpScreenUi(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick =  { }
+            onClick =  { onEvent(SignUpScreenEvent.SignUp) }
         ) {
             Text(text = stringResource(R.string.sign_up_button_text))
         }
@@ -103,6 +108,14 @@ internal fun SignUpScreenUi(
             Text(
                 text = stringResource(R.string.go_to_sign_in_text),
                 color = MaterialTheme.colorScheme.inversePrimary,
+                modifier = Modifier.clickable { onEvent(SignUpScreenEvent.BackToSignIn) }
+            )
+        }
+        if (error.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = error,
+                color = MaterialTheme.colorScheme.error,
             )
         }
     }
@@ -115,7 +128,11 @@ private fun SignUpScreenUiPreview(
 ){
     AppTheme {
         SignUpScreenUi(
-            onBackToSignIn = {}
+            login = "",
+            password = "",
+            repeatingPassword = "",
+            error = "",
+            onEvent = {}
         )
     }
 }

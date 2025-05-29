@@ -2,6 +2,8 @@ package ru.rodipit.favourites.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.navigation.api.AppNavigator
+import com.example.navigation.api.Route
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,6 +20,7 @@ internal class FavouritesScreenViewModel : ViewModel() {
     private val _state: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
 
     private val databaseManager: QuotesDbManager by inject(QuotesDbManager::class.java)
+    private val navigator: AppNavigator by inject(AppNavigator::class.java)
 
     private var likedQuotes = databaseManager.getAll()
         .stateIn(
@@ -48,6 +51,12 @@ internal class FavouritesScreenViewModel : ViewModel() {
             }
         }
     }
+
+    fun onNavigateToQuote(pos: Int) {
+        navigator.navigateTo(Route.QuoteDetails(id = likedQuotes.value.getOrNull(pos)?.id ?: return))
+    }
+
+
 }
 
 private fun QuoteModel.toQuoteItemUiData(isLiked: Boolean): QuoteItemUiData {

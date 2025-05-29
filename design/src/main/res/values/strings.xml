@@ -12,12 +12,12 @@
     <string name="go_to_sign_up_text">Sign Up</string>
     <string name="go_to_sign_in_trailing_text">Do you already have an account?</string>
     <string name="go_to_sign_in_text">Sign In</string>
-    <string name="splash_screen_title_text">MovieQuotes</string>
+    <string name="splash_screen_title_text" translatable="false">MovieQuotes</string>
     <string name="profile_screen_top_bar_title">Profile</string>
     <string name="settings_screen_top_bar_title">Settings</string>
     <string name="add_quote_screen_top_bar_title">Add quote</string>
     <string name="name">Name: %s</string>
-    <string name="email">Email: %s</string>
+    <string name="email" translatable="false">Email: %s</string>
     <string name="enter_movie_title">Enter a movie title</string>
     <string name="enter_movie_quote">Enter a quote</string>
     <string name="add_quote_button_text">Add quote</string>
@@ -31,4 +31,6 @@
     <string name="light_theme_type_text">Light</string>
     <string name="dark_theme_type_text">Dark</string>
     <string name="auto_theme_type_text">Auto</string>
+    <string name="something_error_message">Something went wrong</string>
+    <string name="not_equal_passwords_error_message">Password are not equal</string>
 </resources>

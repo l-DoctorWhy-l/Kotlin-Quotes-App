@@ -8,7 +8,9 @@ val signUpScreenModule = module {
 
     viewModel<SignUpScreenViewModel> {
         SignUpScreenViewModel(
-            appNavigator = get()
+            appNavigator = get(),
+            repository = get(),
+            stringProvider = get(),
         )
     }
 

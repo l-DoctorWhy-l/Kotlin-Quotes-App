@@ -44,6 +44,7 @@ dependencies {
     implementation(project(":navigation"))
     implementation(project(":quotes-api"))
     implementation(project(":models"))
+    implementation(project(":database"))
 
     implementation(libs.koin.core)
     implementation(platform(libs.koin.bom))

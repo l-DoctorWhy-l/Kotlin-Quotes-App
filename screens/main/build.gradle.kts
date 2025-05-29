@@ -44,6 +44,7 @@ dependencies {
     implementation(project(":models"))
     implementation(project(":quotes-api"))
     implementation(project(":database"))
+    implementation(project(":navigation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

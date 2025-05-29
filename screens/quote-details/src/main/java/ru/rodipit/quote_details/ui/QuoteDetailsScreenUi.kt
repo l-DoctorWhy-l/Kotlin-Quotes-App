@@ -52,6 +52,7 @@ internal fun QuoteDetailsScreenUi(
             is QuoteDetailsScreenUiState.Content -> {
                 QuoteDetailsScreenContent(
                     uiData = uiState,
+                    onLikeClick = presenter::onLikeClick,
                     modifier = Modifier
                 )
             }
@@ -62,6 +63,7 @@ internal fun QuoteDetailsScreenUi(
 @Composable
 private fun QuoteDetailsScreenContent(
     uiData: QuoteDetailsScreenUiState.Content,
+    onLikeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -86,7 +88,7 @@ private fun QuoteDetailsScreenContent(
                 text = uiData.film,
             )
             IconButton(
-                onClick = { },
+                onClick = onLikeClick,
             ) {
                 if (uiData.isLiked) {
                     Icon(

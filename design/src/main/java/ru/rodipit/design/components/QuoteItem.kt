@@ -37,6 +37,7 @@ fun QuoteItem(
     uiData: QuoteItemUiData,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
+    onLikeClick: (() -> Unit)? = null,
 ) {
 
     Row(
@@ -72,26 +73,27 @@ fun QuoteItem(
             }
         }
 
-        IconButton(
-            onClick = { onClick?.invoke() }
-        ) {
+        onLikeClick?.let { onLikeClick ->
+            IconButton(
+                onClick = { onLikeClick.invoke() }
+            ) {
 
-            if (uiData.isLiked) {
-                Icon(
-                    modifier = Modifier.size(30.dp),
-                    painter = painterResource(R.drawable.baseline_favorite_24),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            } else {
-                Icon(
-                    modifier = Modifier.size(30.dp),
-                    painter = painterResource(R.drawable.baseline_favorite_border_24),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
+                if (uiData.isLiked) {
+                    Icon(
+                        modifier = Modifier.size(30.dp),
+                        painter = painterResource(R.drawable.baseline_favorite_24),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                } else {
+                    Icon(
+                        modifier = Modifier.size(30.dp),
+                        painter = painterResource(R.drawable.baseline_favorite_border_24),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
-
         }
     }
 }

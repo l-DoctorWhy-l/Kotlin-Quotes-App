@@ -11,7 +11,7 @@ val quotesRepositoryModule = module {
 
     single<QuotesApi> {
         Retrofit.Builder()
-            .baseUrl("http://192.168.3.26:8080/")
+            .baseUrl("http://192.168.3.21:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(QuotesApi::class.java)

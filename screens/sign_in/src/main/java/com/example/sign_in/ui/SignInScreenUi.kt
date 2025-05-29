@@ -1,7 +1,7 @@
 package com.example.sign_in.ui
 
-import android.widget.Space
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +26,10 @@ import ru.rodipit.design.theme.AppTheme
 
 @Composable
 internal fun SignInScreenUi(
+    login: String,
+    password: String,
+    error: String,
+    onEvent: (SignInScreenEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -42,8 +46,8 @@ internal fun SignInScreenUi(
         )
         Spacer(Modifier.height(16.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = login,
+            onValueChange = { onEvent(SignInScreenEvent.LoginChanged(it)) },
             singleLine = true,
             label = {
                 Text(text = stringResource(R.string.login_text_field_label_text))
@@ -58,8 +62,8 @@ internal fun SignInScreenUi(
         )
         Spacer(Modifier.height(16.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = password,
+            onValueChange = { onEvent(SignInScreenEvent.PasswordChanged(it)) },
             singleLine = true,
             label = {
                 Text(text = stringResource(R.string.password_text_field_label_text))
@@ -74,7 +78,7 @@ internal fun SignInScreenUi(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick =  { }
+            onClick =  { onEvent(SignInScreenEvent.SignIn) }
         ) {
             Text(text = stringResource(R.string.sign_in_button_text))
         }
@@ -87,6 +91,14 @@ internal fun SignInScreenUi(
             Text(
                 text = stringResource(R.string.go_to_sign_up_text),
                 color = MaterialTheme.colorScheme.inversePrimary,
+                modifier = Modifier.clickable { onEvent(SignInScreenEvent.BackToSignUp) }
+            )
+        }
+        if (error.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = error,
+                color = MaterialTheme.colorScheme.error,
             )
         }
     }
@@ -94,10 +106,13 @@ internal fun SignInScreenUi(
 
 @Preview
 @Composable
-private fun SignInScreenUiPreview(
-
-){
+private fun SignInScreenUiPreview(){
     AppTheme {
-        SignInScreenUi()
+        SignInScreenUi(
+            login = "",
+            password = "",
+            error = "",
+            onEvent = {},
+        )
     }
 }

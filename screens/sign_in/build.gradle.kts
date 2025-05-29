@@ -41,6 +41,8 @@ android {
 dependencies {
     implementation(project(":design"))
     implementation(project(":navigation"))
+    implementation(project(":quotes-api"))
+    implementation(project(":utils"))
 
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

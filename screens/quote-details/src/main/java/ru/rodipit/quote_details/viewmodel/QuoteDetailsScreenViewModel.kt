@@ -5,10 +5,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.navigation.api.AppNavigator
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
+import ru.rodipit.database.api.QuotesDbManager
+import ru.rodipit.models.QuoteModel
 import ru.rodipit.quote_details.ui.QuoteDetailsScreenUiState
 import ru.rodipit.quotes_api.api.ConvertedResult
 import ru.rodipit.quotes_api.api.QuotesRepository
@@ -23,6 +27,16 @@ internal class QuoteDetailsScreenViewModel(
         MutableStateFlow(QuoteDetailsScreenUiState.Loading(isLoading = true))
     val uiState = _uiState.asStateFlow()
 
+    private val quotesDbManager: QuotesDbManager by inject(QuotesDbManager::class.java)
+
+    private var likedQuotes = quotesDbManager.getAll()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = emptyList()
+        )
+
+
     init {
         viewModelScope.launch {
             when(val result = repository.quote(quoteId)) {
@@ -31,7 +45,7 @@ internal class QuoteDetailsScreenViewModel(
                         QuoteDetailsScreenUiState.Content(
                             film = result.data.film ?: "",
                             content = result.data.content,
-                            isLiked = false,
+                            isLiked = likedQuotes.value.map { it.id }.contains(quoteId),
                         )
                     }
                 }
@@ -46,6 +60,27 @@ internal class QuoteDetailsScreenViewModel(
                 }
             }
         }
+    }
+
+    fun onLikeClick() {
+        viewModelScope.launch {
+            (_uiState.value as? QuoteDetailsScreenUiState.Content)?.let { state ->
+                if (state.isLiked) {
+                    quotesDbManager.deleteById(quoteId)
+                    _uiState.update { state.copy(isLiked = false) }
+                } else {
+                    quotesDbManager.insertQuote(
+                        QuoteModel(
+                            id = quoteId,
+                            content = state.content,
+                            film = state.film,
+                        )
+                    )
+                    _uiState.update { state.copy(isLiked = true) }
+                }
+            }
+        }
+
     }
 
     fun onBackButtonClicked() {

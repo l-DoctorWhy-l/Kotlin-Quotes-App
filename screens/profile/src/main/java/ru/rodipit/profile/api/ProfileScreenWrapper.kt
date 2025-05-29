@@ -7,6 +7,7 @@ import org.koin.androidx.compose.koinViewModel
 import ru.rodipit.profile.ProfileScreenViewModel
 import ru.rodipit.profile.ui.ProfileScreenPresenter
 import ru.rodipit.profile.ui.ProfileScreenUi
+import ru.rodipit.profile.ui.ProfileScreenUiState
 
 @Composable
 fun ProfileScreenWrapper(
@@ -15,7 +16,12 @@ fun ProfileScreenWrapper(
     val viewModel: ProfileScreenViewModel = koinViewModel()
     val presenter = remember { ProfileScreenPresenter.Impl(viewModel = viewModel) }
     ProfileScreenUi(
-        presenter = presenter,
+        presenter = ProfileScreenPresenter.Preview(
+            ProfileScreenUiState.Content(
+                email = "kvartalovfade@gmail.com",
+                name = "Egor",
+            )
+        ),
         modifier = modifier,
     )
 }

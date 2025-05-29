@@ -8,7 +8,9 @@ val signInScreenModule = module {
 
     viewModel<SignInScreenViewModel> {
         SignInScreenViewModel(
-            navigator = get()
+            navigator = get(),
+            repository = get(),
+            stringProvider = get(),
         )
     }
 

@@ -73,12 +73,13 @@ private fun FavouritesScreenSuccess(
         Spacer(Modifier.height(10.dp))
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             itemsIndexed(uiData.quotes) { index, item ->
                 QuoteItem(
                     uiData = item,
-                    onClick = { presenter.unlikeQuote(pos = index) }
+                    onClick = { presenter.onNavigateToQuote(pos = index) },
+                    onLikeClick = { presenter.unlikeQuote(pos = index) }
                 )
             }
         }

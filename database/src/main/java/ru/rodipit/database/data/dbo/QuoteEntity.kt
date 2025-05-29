@@ -9,14 +9,14 @@ import ru.rodipit.models.QuoteModel
 internal data class QuoteEntity(
     @PrimaryKey val id: String,
     @ColumnInfo("content") val content: String,
-    @ColumnInfo("author") val author: String?,
+    @ColumnInfo("film") val film: String?,
 )
 
 internal fun QuoteEntity.toQuote(): QuoteModel {
     return QuoteModel(
         id = this.id,
         content = this.content,
-        film = this.author,
+        film = this.film,
     )
 }
 

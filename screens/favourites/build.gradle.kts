@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":design"))
     implementation(project(":models"))
     implementation(project(":database"))
+    implementation(project(":navigation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -6,6 +6,7 @@ import retrofit2.HttpException
 import ru.rodipit.quotes_api.api.ConvertedResult
 import ru.rodipit.quotes_api.api.MyError
 import ru.rodipit.quotes_api.api.QuotesRepository
+import ru.rodipit.quotes_api.data.dto.AuthUserData
 import ru.rodipit.quotes_api.data.dto.toQuote
 import java.io.IOException
 
@@ -20,6 +21,63 @@ internal class QuotesRepositoryImpl(
             )
             val quotes = result.mapNotNull { it.toQuote() }
             return@withContext ConvertedResult.Success(data = quotes)
+        }  catch (e: IOException) {
+            return@withContext ConvertedResult.Error(error = MyError.InternetError)
+        } catch (e: HttpException) {
+            return@withContext when {
+                e.code() == 404 -> ConvertedResult.Error(error = MyError.NotFoundError)
+                e.code() >= 500 -> ConvertedResult.Error(error = MyError.ServerError)
+                e.code() >= 400 -> ConvertedResult.Error(error = MyError.NetworkError)
+                else -> ConvertedResult.Error(error = MyError.UnknownError)
+            }
+        }
+    }
+
+    override suspend fun feed() = withContext(Dispatchers.IO) {
+        try {
+            val result = api.feed()
+            val quotes = result.mapNotNull { it.toQuote() }
+            return@withContext ConvertedResult.Success(data = quotes)
+        }  catch (e: IOException) {
+            return@withContext ConvertedResult.Error(error = MyError.InternetError)
+        } catch (e: HttpException) {
+            return@withContext when {
+                e.code() == 404 -> ConvertedResult.Error(error = MyError.NotFoundError)
+                e.code() >= 500 -> ConvertedResult.Error(error = MyError.ServerError)
+                e.code() >= 400 -> ConvertedResult.Error(error = MyError.NetworkError)
+                else -> ConvertedResult.Error(error = MyError.UnknownError)
+            }
+        }
+    }
+
+    override suspend fun login(login: String, password: String) = withContext(Dispatchers.IO) {
+        try {
+            val userData = AuthUserData(
+                login = login,
+                password = password,
+            )
+            val result = api.login(userData)
+            return@withContext ConvertedResult.Success(data = result.token)
+        }  catch (e: IOException) {
+            return@withContext ConvertedResult.Error(error = MyError.InternetError)
+        } catch (e: HttpException) {
+            return@withContext when {
+                e.code() == 404 -> ConvertedResult.Error(error = MyError.NotFoundError)
+                e.code() >= 500 -> ConvertedResult.Error(error = MyError.ServerError)
+                e.code() >= 400 -> ConvertedResult.Error(error = MyError.NetworkError)
+                else -> ConvertedResult.Error(error = MyError.UnknownError)
+            }
+        }
+    }
+
+    override suspend fun register(login: String, password: String) = withContext(Dispatchers.IO) {
+        try {
+            val userData = AuthUserData(
+                login = login,
+                password = password,
+            )
+            val result = api.register(userData)
+            return@withContext ConvertedResult.Success(data = result.token)
         }  catch (e: IOException) {
             return@withContext ConvertedResult.Error(error = MyError.InternetError)
         } catch (e: HttpException) {

@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -25,6 +26,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import okhttp3.Dispatcher
 import org.koin.java.KoinJavaComponent.inject
+import ru.rodipit.database.api.QuotesDbManager
 import ru.rodipit.design.components.model.QuoteItemUiData
 import ru.rodipit.models.QuoteModel
 import ru.rodipit.quotes_api.api.ConvertedResult
@@ -40,7 +42,8 @@ internal class SearchScreenViewModel(
     private val navigator: AppNavigator,
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<SearchScreenUiState> = MutableStateFlow(SearchScreenUiState.Loading)
+    private val _state: MutableStateFlow<SearchScreenUiState> =
+        MutableStateFlow(SearchScreenUiState.Loading)
     val state = _state.asStateFlow()
 
     private val searchHistory = toHistoryItems(dataStoreManager.getData(SEARCH_HISTORY_KEY))
@@ -49,6 +52,7 @@ internal class SearchScreenViewModel(
             started = SharingStarted.Eagerly,
             initialValue = emptyList(),
         )
+
 
     private val _query: MutableStateFlow<String> = MutableStateFlow("")
     val query = _query.asStateFlow()
@@ -102,11 +106,13 @@ internal class SearchScreenViewModel(
                 }
             }
             delay(500)
-            when(val result = repository.search(query)) {
+            when (val result = repository.search(query)) {
                 is ConvertedResult.Success -> {
                     _state.update {
                         SearchScreenUiState.Content(
-                            searchResult = result.data.map { it.toUi() },
+                            searchResult = result.data.map { quoteModel ->
+                                quoteModel.toUi()
+                            },
                         )
                     }
                 }
@@ -193,8 +199,9 @@ internal fun QuoteModel.toUi(): QuoteItemUiData {
     )
 }
 
+
 internal fun MyError.toMessage(): String {
-    return when(this) {
+    return when (this) {
         is MyError.NetworkError -> "Network Error"
         is MyError.ServerError -> "Server Error"
         is MyError.UnknownError -> "Unknown Error"

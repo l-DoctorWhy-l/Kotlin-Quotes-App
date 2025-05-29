@@ -12,6 +12,8 @@ internal interface FavouritesScreenPresenter {
 
     fun unlikeQuote(pos: Int)
 
+    fun onNavigateToQuote(pos: Int)
+
     class Impl(
         private val viewModel: FavouritesScreenViewModel,
     ): FavouritesScreenPresenter {
@@ -21,6 +23,10 @@ internal interface FavouritesScreenPresenter {
             viewModel.unlikeQuote(pos)
         }
 
+        override fun onNavigateToQuote(pos: Int) {
+            viewModel.onNavigateToQuote(pos)
+        }
+
     }
 
     class Preview(
@@ -28,6 +34,7 @@ internal interface FavouritesScreenPresenter {
     ): FavouritesScreenPresenter {
         override val state = MutableStateFlow(uiState)
         override fun unlikeQuote(pos: Int) = Unit
+        override fun onNavigateToQuote(pos: Int) = Unit
 
     }
 

@@ -9,6 +9,12 @@ interface QuotesRepository {
 
     suspend fun quote(id: String): ConvertedResult<QuoteModel, MyError>
 
+    suspend fun feed(): ConvertedResult<List<QuoteModel>, MyError>
+
+    suspend fun login( login: String, password: String): ConvertedResult<String, MyError>
+
+    suspend fun register(login: String, password: String): ConvertedResult<String, MyError>
+
 }
 
 sealed interface ConvertedResult<out D, out E: MyError> {
